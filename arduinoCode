@@ -20,3 +20,30 @@ int servoInterval = servoSlowInterval; // initial millisecs between servo moves
 int servoDegrees = 10;   	// amount servo moves at each step
 unsigned long currentMillis = 0;	// stores the value of millis() in each iteration of loop()
 unsigned long previousServoMillis = 0; // the time when the servo was last moved
+
+void servoSweep() {
+ 
+ 	// this is similar to the servo sweep example except that it uses millis() rather than delay()
+ 
+ 	// nothing happens unless the interval has expired
+ 	// the value of currentMillis was set in loop()
+ 
+ if (currentMillis - previousServoMillis >= servoInterval) {
+   	// its time for another move
+   previousServoMillis += servoInterval;
+  
+   servoPosition = servoPosition + servoDegrees; // servoDegrees might be negative
+ 
+  
+   if ((servoPosition >= servoMaxDegrees) || (servoPosition <= servoMinDegrees))  {
+     	// if the servo is at either extreme change the sign of the degrees to make it move the other way
+ 	servoDegrees = - servoDegrees; // reverse direction
+     	// and update the position to ensure it is within range
+ 	servoPosition = servoPosition + servoDegrees;
+   }
+   	// make the servo move to the next position
+   myservo.write(servoPosition);
+   	// and record the time when the move happened
+ }
+}
+
