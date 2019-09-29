@@ -1,0 +1,22 @@
+#include <Servo.h>
+ 
+// ----CONSTANTS (won't change)
+ 
+const int servoPin = 5; // the pin number for the servo signal
+const int servoMinDegrees = 60; // the limits to servo movement
+const int servoMaxDegrees = 160;
+ 
+const int servo2Pin = 7; // the pin number for the servo signal
+const int servo2MinDegrees = 60; // the limits to servo movement
+const int servo2MaxDegrees = 180;
+ 
+//------- VARIABLES (will change)
+Servo myservo;  // create servo object to control a servo
+ 
+int servoPosition = 90; 	// the current angle of the servo - starting at 90.
+int servoSlowInterval = 80; // millisecs between servo moves
+int servoFastInterval = 10;
+int servoInterval = servoSlowInterval; // initial millisecs between servo moves
+int servoDegrees = 10;   	// amount servo moves at each step
+unsigned long currentMillis = 0;	// stores the value of millis() in each iteration of loop()
+unsigned long previousServoMillis = 0; // the time when the servo was last moved
