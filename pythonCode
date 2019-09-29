@@ -1,0 +1,30 @@
+import matplotlib inline
+import seaborn
+import numpy, scipy, matplotlib.pyplot as plt, IPython.display as ipd
+import librosa, librosa.display
+plt.rcParams[‘figure.figsize’] = (14, 5)
+
+
+y, sr = librosa.load('addash.wav', offset=0, duration=6)
+y, index = librosa.effects.trim(y)
+ipd.Audio(y, rate=sr)
+
+
+onset_frames = librosa.onset.onset_detect(y=y, sr=sr)
+librosa.frames_to_time(onset_frames, sr=sr)
+
+D = np.abs(librosa.stft(y))
+plt.figure()
+ax1 = plt.subplot(2, 1, 1)
+librosa.display.specshow(librosa.amplitude_to_db(D, ref=np.max), x_axis=’time’, y_axis=’log’)
+plt.title('Power spectrogram')
+plt.subplot(2, 1, 2, sharex=ax1)
+plt.plot(times, o_env, label='Onset strength')
+ plt.vlines(times[onset_frames], 0, o_env.max(), color='r', alpha=0.9 ,linestyle='--', label='Onsets')
+plt.axis('tight')
+plt.legend(frameon=True, framealpha=0.75)
+plt.show()
+
+
+librosa.display.waveplot(y, sr=sr)
+plt.vlines(times[onset_frames], -1, 1, color='r')
