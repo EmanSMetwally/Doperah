@@ -1,6 +1,6 @@
-import matplotlib inline
+import matplotlib
 import seaborn
-import numpy, scipy, matplotlib.pyplot as plt, IPython.display as ipd
+import numpy as np, scipy, matplotlib.pyplot as plt, IPython.display as ipd
 import librosa, librosa.display
 plt.rcParams[‘figure.figsize’] = (14, 5)
 
@@ -16,11 +16,11 @@ librosa.frames_to_time(onset_frames, sr=sr)
 D = np.abs(librosa.stft(y))
 plt.figure()
 ax1 = plt.subplot(2, 1, 1)
-librosa.display.specshow(librosa.amplitude_to_db(D, ref=np.max), x_axis=’time’, y_axis=’log’)
+librosa.display.specshow(librosa.amplitude_to_db(D, ref=np.max), x_axis='time', y_axis='log')
 plt.title('Power spectrogram')
 plt.subplot(2, 1, 2, sharex=ax1)
 plt.plot(times, o_env, label='Onset strength')
- plt.vlines(times[onset_frames], 0, o_env.max(), color='r', alpha=0.9 ,linestyle='--', label='Onsets')
+plt.vlines(times[onset_frames], 0, o_env.max(), color='r', alpha=0.9 ,linestyle='--', label='Onsets')
 plt.axis('tight')
 plt.legend(frameon=True, framealpha=0.75)
 plt.show()
